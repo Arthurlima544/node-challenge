@@ -1,22 +1,27 @@
-const fastify = require('fastify')
-const crypto = require('crypto')
-const multipart = require('@fastify/multipart')
+import fastify from 'fastify'
+import crypto from 'node:crypto'
+import multipart from '@fastify/multipart'
 
 const server = fastify()
 server.register(multipart)
 
 const courses = [
-    { id: 1, title: 'Node.js Course' },
-    { id: 2, title: 'React Course' },
-    { id: 3, title: 'Flutter Course' },
+    { id: '1', title: 'Node.js Course' },
+    { id: '2', title: 'React Course' },
+    { id: '3', title: 'Flutter Course' },
 ]
 server.get('/courses', () => {
     return { courses }
 })
 
 server.get('/courses/:id', (request, reply) => {
+    type Params = {
+        id: string
+    }
 
-    const courseId = request.params.id
+    const params = request.params as Params
+    const courseId = params.id
+
 
     const course = courses.find(course => course.id === courseId)
 
@@ -28,7 +33,11 @@ server.get('/courses/:id', (request, reply) => {
 })
 
 server.post('/courses', (request, reply) => {
-    const courseTitle = request.body.title
+    type Body = {
+        title: string
+    }
+    const body = request.body as Body
+    const courseTitle = body.title
     const courseId = crypto.randomUUID()
 
     if (!courseTitle) {
