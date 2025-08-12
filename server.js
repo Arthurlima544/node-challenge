@@ -12,9 +12,28 @@ server.get('/courses', () => {
     return { courses }
 })
 
-server.post('/courses', (_, reply) => {
+server.get('/courses/:id', (request, reply) => {
+
+    const courseId = request.params.id
+
+    const course = courses.find(course => course.id === courseId)
+
+    if (course) {
+        return { course }
+    }
+
+    return reply.status(404).send()
+})
+
+server.post('/courses', (request, reply) => {
+    const courseTitle = request.body.title
     const courseId = crypto.randomUUID()
-    courses.push({ id: courseId, title: 'New Course' })
+
+    if (!courseTitle) {
+        return reply.status(400).send("Title Required")
+    }
+
+    courses.push({ id: courseId, title: courseTitle })
     return reply.status(201).send({ courseId })
 })
 
