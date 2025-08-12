@@ -1,7 +1,9 @@
 const fastify = require('fastify')
 const crypto = require('crypto')
+const multipart = require('@fastify/multipart')
 
 const server = fastify()
+server.register(multipart)
 
 const courses = [
     { id: 1, title: 'Node.js Course' },
@@ -35,6 +37,36 @@ server.post('/courses', (request, reply) => {
 
     courses.push({ id: courseId, title: courseTitle })
     return reply.status(201).send({ courseId })
+})
+
+server.patch('/avatar', async (request, reply) => {
+    const data = await request.file()
+
+    if (!data) {
+        return reply.status(400).send("Image Required")
+    }
+
+    const buffer = await data.toBuffer();
+    const base64Image = buffer.toString('base64');
+    const mimeType = data.mimetype
+
+    reply.header('Content-Type', 'text/html');
+
+    return reply.status(200).send(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <title>Avatar Preview</title>
+            <style>
+                body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+                img { border-radius: 50%; max-width: 250px; }
+            </style>
+        </head>
+        <body>
+            <img src="data:${mimeType};base64,${base64Image}" alt="User Avatar">
+        </body>
+        </html>
+    `);
 })
 
 server.listen({ port: 3333 }).then(() => {
