@@ -71,10 +71,6 @@ server.post('/courses', {
     const title = request.body.title
     const description = request.body.description
 
-    if (!title) {
-        return reply.status(400).send("Title Required")
-    }
-
     const result = await db
         .insert(courses)
         .values({ title: title, description: description })
