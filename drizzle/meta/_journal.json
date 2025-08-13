@@ -8,6 +8,13 @@
       "when": 1755093320887,
       "tag": "0000_zippy_quasimodo",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1755101735472,
+      "tag": "0001_goofy_yellowjacket",
+      "breakpoints": true
     }
   ]
 }
