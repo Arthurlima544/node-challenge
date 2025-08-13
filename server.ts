@@ -4,6 +4,8 @@ import multipart from '@fastify/multipart'
 import { db } from './src/database/client.ts'
 import { courses } from './src/database/schema.ts'
 import { eq } from 'drizzle-orm'
+import { validatorCompiler, serializerCompiler, type ZodTypeProvider } from 'fastify-type-provider-zod'
+import { z } from 'zod'
 
 const server = fastify({
     logger: {
@@ -15,7 +17,10 @@ const server = fastify({
             },
         },
     },
-})
+}).withTypeProvider<ZodTypeProvider>()
+
+server.setSerializerCompiler(serializerCompiler)
+server.setValidatorCompiler(validatorCompiler)
 
 server.get('/courses', async (request, reply) => {
     const result = await db.select({
