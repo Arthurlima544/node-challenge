@@ -1,9 +1,4 @@
 GET http://localhost:3333/courses
-Content-Type: application/json
-
-{
-    "title": "Fastify Course"
-}
 
 ###
 
@@ -11,7 +6,8 @@ POST http://localhost:3333/courses
 Content-Type: application/json
 
 {
-    "title": "Ansible Course"
+    "title": "Docker Cours",
+    "description": "Course for software engineers"
 }
 
 ###
