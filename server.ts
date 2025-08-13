@@ -52,22 +52,24 @@ server.get('/courses/:id', async (request, reply) => {
     return reply.status(404).send()
 })
 
-server.post('/courses', async (request, reply) => {
-    type Body = {
-        title: string
-        description: string | undefined
-    }
-    const body = request.body as Body
-    const courseTitle = body.title
-    const courseDescription = body.description
+server.post('/courses', {
+    schema: {
+        body: z.object({
+            title: z.string().min(5, 'Title must have 5 characters'),
+            description: z.string().optional()
+        }),
+    },
+}, async (request, reply) => {
+    const title = request.body.title
+    const description = request.body.description
 
-    if (!courseTitle) {
+    if (!title) {
         return reply.status(400).send("Title Required")
     }
 
     const result = await db
         .insert(courses)
-        .values({ title: courseTitle, description: courseDescription })
+        .values({ title: title, description: description })
         .returning()
 
     return reply.status(201).send({ courseId: result[0].id })
