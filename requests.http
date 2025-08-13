@@ -1,9 +1,4 @@
 GET http://localhost:3333/courses
-Content-Type: application/json
-
-{
-    "title": "Fastify Course"
-}
 
 ###
 
@@ -11,23 +6,11 @@ POST http://localhost:3333/courses
 Content-Type: application/json
 
 {
-    "title": "Ansible Course"
+    "title": "Docker Cours",
+    "description": "Course for software engineers"
 }
 
 ###
 
 GET http://localhost:3333/courses/5ef34ffb-b15e-4aee-bd8c-c4b54c0a91bc
 
-
-###
-
-PATCH http://localhost:3333/avatar
-Content-Type: multipart/form-data; boundary=boundary
-
---boundary
-Content-Disposition: form-data; name="avatar"; filename="my_image.jpg"
-Content-Type: image/jpeg
-
-< ~/Downloads/avatar_7074311_3551739.jpg
-
---boundary--
