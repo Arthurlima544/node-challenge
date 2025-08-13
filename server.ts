@@ -60,38 +60,12 @@ server.post('/courses', async (request, reply) => {
         return reply.status(400).send("Title Required")
     }
 
-    courses.push({ id: courseId, title: courseTitle })
-    return reply.status(201).send({ courseId })
-})
+    const result = await db
+        .insert(courses)
+        .values({ title: courseTitle, description: courseDescription })
+        .returning()
 
-server.patch('/avatar', async (request, reply) => {
-    const data = await request.file()
-
-    if (!data) {
-        return reply.status(400).send("Image Required")
-    }
-
-    const buffer = await data.toBuffer();
-    const base64Image = buffer.toString('base64');
-    const mimeType = data.mimetype
-
-    reply.header('Content-Type', 'text/html');
-
-    return reply.status(200).send(`
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <title>Avatar Preview</title>
-            <style>
-                body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-                img { border-radius: 50%; max-width: 250px; }
-            </style>
-        </head>
-        <body>
-            <img src="data:${mimeType};base64,${base64Image}" alt="User Avatar">
-        </body>
-        </html>
-    `);
+    return reply.status(201).send({ courseId: result[0].id })
 })
 
 server.listen({ port: 3333 }).then(() => {
