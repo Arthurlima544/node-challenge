@@ -5,7 +5,7 @@ import { makeCourse } from '../tests/factories/make-course.ts'
 import { randomUUID } from 'crypto'
 
 
-test('get course by id', async () => {
+test('get course', async () => {
     await server.ready()
 
     const titleId = randomUUID()
