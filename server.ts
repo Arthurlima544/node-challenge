@@ -1,11 +1,10 @@
 import fastify from 'fastify'
 import { validatorCompiler, serializerCompiler, type ZodTypeProvider, jsonSchemaTransform } from 'fastify-type-provider-zod'
 import { fastifySwagger } from '@fastify/swagger'
-import { fastifySwaggerUi } from '@fastify/swagger-ui'
 import { createCoursesRoute } from './src/routes/create-course.ts'
 import { getCoursesByIdRoute } from './src/routes/get-course-by-id.ts'
 import { getCoursesRoute } from './src/routes/get-courses.ts'
-
+import scalarAPIReference from '@scalar/fastify-api-reference'
 const server = fastify({
     logger: {
         transport: {
@@ -28,8 +27,11 @@ server.register(fastifySwagger, {
     transform: jsonSchemaTransform,
 })
 
-server.register(fastifySwaggerUi, {
-    routePrefix: '/docs'
+server.register(scalarAPIReference, {
+    routePrefix: '/docs',
+    configuration: {
+        theme: 'bluePlanet',
+    },
 })
 
 server.setSerializerCompiler(serializerCompiler)
