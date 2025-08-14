@@ -30,13 +30,7 @@ export const getCoursesByIdRoute: FastifyPluginAsyncZod = async function (server
             }
         },
         async (request, reply) => {
-            type Params = {
-                id: string
-            }
-
-            const params = request.params as Params
-            const courseId = params.id
-
+            const courseId = request.params.id
 
             const result = await db
                 .select()
