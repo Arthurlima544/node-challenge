@@ -24,6 +24,7 @@
     "zod": "^4.0.17"
   },
   "devDependencies": {
+    "@faker-js/faker": "^9.9.0",
     "@types/node": "^24.2.1",
     "drizzle-kit": "^0.31.4",
     "typescript": "^5.9.2"
