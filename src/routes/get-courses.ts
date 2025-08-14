@@ -4,7 +4,7 @@ import { courses } from "../database/schema.ts"
 import z from 'zod';
 import { asc, ilike, and, SQL } from 'drizzle-orm';
 
-const defaultPageSize = 2
+const defaultPageSizeLimit = 10
 
 export const getCoursesRoute: FastifyPluginAsyncZod = async function (server) {
     server.get('/courses', {
@@ -26,7 +26,7 @@ export const getCoursesRoute: FastifyPluginAsyncZod = async function (server) {
             querystring: z.object({
                 search: z.string().optional().describe('Search a title using Case-insensitive'),
                 orderBy: z.enum(['id', 'title']).optional().default('id').describe('Order ascendant by id or title'),
-                pageSize: z.coerce.number().optional().default(defaultPageSize).describe('How many results per page'),
+                pageSize: z.coerce.number().optional().describe('How many results per page'),
                 page: z.coerce.number().min(1).optional().default(1).describe('The page number to retrieve, starting from 1.'),
             })
         }
@@ -48,8 +48,8 @@ export const getCoursesRoute: FastifyPluginAsyncZod = async function (server) {
                     .from(courses)
                     .where(and(...conditions))
                     .orderBy(asc(courses[orderBy]))
-                    .offset((page - 1) * pageSize)
-                    .limit(pageSize),
+                    .offset((page - 1) * (pageSize ? pageSize : defaultPageSizeLimit))
+                    .limit(pageSize ? pageSize : defaultPageSizeLimit),
                 db.$count(courses, and(...conditions))
             ]
         )
