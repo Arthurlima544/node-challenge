@@ -21,3 +21,12 @@ test('get course by id', async () => {
         }
     })
 })
+
+test('return 404 for non existing course by valid uuid', async () => {
+    await server.ready()
+
+    const response = await supertest(server.server)
+        .get(`/courses/6e3b2494-84c2-44bd-a154-9eda02697230`)
+
+    expect(response.status).toEqual(404)
+})
