@@ -1,8 +1,8 @@
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
 import { db } from "../database/client.ts"
-import { courses } from "../database/schema.ts"
+import { courses, enrollments } from "../database/schema.ts"
 import z from 'zod';
-import { asc, ilike, and, SQL } from 'drizzle-orm';
+import { asc, ilike, and, SQL, eq, count } from 'drizzle-orm';
 
 const defaultPageSizeLimit = 10
 
@@ -18,6 +18,7 @@ export const getCoursesRoute: FastifyPluginAsyncZod = async function (server) {
                         z.object({
                             id: z.uuid(),
                             title: z.string(),
+                            enrollments: z.number(),
                         })
                     ),
                     total: z.number(),
@@ -43,12 +44,15 @@ export const getCoursesRoute: FastifyPluginAsyncZod = async function (server) {
             [
                 db.select({
                     id: courses.id,
-                    title: courses.title
+                    title: courses.title,
+                    enrollments: count(enrollments.id),
                 })
                     .from(courses)
+                    .leftJoin(enrollments, eq(enrollments.courseId, courses.id))
                     .where(and(...conditions))
                     .orderBy(asc(courses[orderBy]))
                     .offset((page - 1) * (pageSize ? pageSize : defaultPageSizeLimit))
+                    .groupBy(courses.id)
                     .limit(pageSize ? pageSize : defaultPageSizeLimit),
                 db.$count(courses, and(...conditions))
             ]
