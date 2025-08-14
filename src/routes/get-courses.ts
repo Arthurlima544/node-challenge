@@ -22,12 +22,13 @@ export const getCoursesRoute: FastifyPluginAsyncZod = async function (server) {
             },
             querystring: z.object({
                 search: z.string().optional().describe('Search a title using Case-insensitive'),
-                orderBy: z.enum(['id', 'title']).optional().default('id').describe('Order ascendant by id or title')
+                orderBy: z.enum(['id', 'title']).optional().default('id').describe('Order ascendant by id or title'),
+                page: z.coerce.number().optional().default(1)
             })
         }
     }, async (request, reply) => {
 
-        const { search, orderBy } = request.query
+        const { search, orderBy, page } = request.query
 
         const result = await db.select({
             id: courses.id,
@@ -37,7 +38,10 @@ export const getCoursesRoute: FastifyPluginAsyncZod = async function (server) {
             .where(
                 search ? ilike(courses.title, `%${search}%`) : undefined
             )
-            .orderBy(asc(courses[orderBy]));
+            .orderBy(asc(courses[orderBy]))
+            .offset((page - 1) * 2)
+            .limit(2);
+
         return reply.send({ courses: result })
     })
 }
