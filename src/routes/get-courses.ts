@@ -17,7 +17,7 @@ export const getCoursesRoute: FastifyPluginAsyncZod = async function (server) {
                             title: z.string(),
                         })
                     )
-                }).describe('Courses retrived with success!')
+                }).describe('Courses retrieved with success!')
             }
         }
     }, async (request, reply) => {

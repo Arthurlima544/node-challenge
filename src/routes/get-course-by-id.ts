@@ -12,7 +12,7 @@ export const getCoursesByIdRoute: FastifyPluginAsyncZod = async function (server
             schema: {
                 tags: ['courses'],
                 summary: 'Get course by Id',
-                description: 'This route course based on id(required).',
+                description: 'This route retrieves a course based on id (required).',
                 response: {
                     200: z.object({
                         course:
@@ -21,7 +21,7 @@ export const getCoursesByIdRoute: FastifyPluginAsyncZod = async function (server
                                 title: z.string(),
                                 description: z.string().nullable()
                             })
-                    }).describe('Courses retrived with success!'),
+                    }).describe('Course retrieved with success!'),
                     404: z.null().describe('Not Found'),
                 },
                 params: z.object({
