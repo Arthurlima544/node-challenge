@@ -10,7 +10,7 @@ test('create a course with success', async () => {
     const response = await supertest(server.server)
         .post('/courses')
         .set('Content-Type', 'application/json')
-        .send({ title: faker.commerce.department() })
+        .send({ title: faker.lorem.word(5) })
 
     console.log(response.body)
 
