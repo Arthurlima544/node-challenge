@@ -1,6 +1,6 @@
-import { FastifyPluginAsyncZod } from "fastify-type-provider-zod"
-import { db } from "../database/client"
-import { courses } from "../database/schema"
+import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
+import { db } from "../database/client.ts"
+import { courses } from "../database/schema.ts"
 import z from "zod"
 
 

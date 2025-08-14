@@ -1,11 +1,11 @@
-import { FastifyPluginAsyncZod } from "fastify-type-provider-zod"
-import { db } from "../database/client"
-import { courses } from "../database/schema"
+import { db } from "../database/client.ts"
+import { courses } from "../database/schema.ts"
 import z from "zod"
+import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
 import { eq } from 'drizzle-orm'
 
 
-export const getCoursesByIdRoute: FastifyPluginAsyncZod = async (server) => {
+export const getCoursesByIdRoute: FastifyPluginAsyncZod = async function (server) {
 
     server.get('/courses/:id',
         {
