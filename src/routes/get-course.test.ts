@@ -9,7 +9,7 @@ import { makeAuthenticatedUser } from '../tests/factories/make-authenticated-use
 test('get course', async () => {
     await server.ready()
 
-    const { token } = await makeAuthenticatedUser('manager')
+    const { user, token } = await makeAuthenticatedUser('manager')
 
     const titleId = randomUUID()
     const course = await makeCourse(titleId)

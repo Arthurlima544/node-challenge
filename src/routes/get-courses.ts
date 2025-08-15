@@ -10,11 +10,11 @@ const defaultPageSizeLimit = 20
 
 export const getCoursesRoute: FastifyPluginAsyncZod = async function (server) {
     server.get('/courses', {
+        preHandler: [
+            checkRequestJWT,
+            checkUserRole('manager'),
+        ],
         schema: {
-            preHandler: [
-                checkRequestJWT,
-                checkUserRole,
-            ],
             tags: ['courses'],
             summary: 'Get all courses',
             description: 'This route show all courses in database.',
@@ -28,7 +28,8 @@ export const getCoursesRoute: FastifyPluginAsyncZod = async function (server) {
                         })
                     ),
                     total: z.number().describe('Total amount of courses in database'),
-                }).describe('Courses retrieved with success!')
+                }).describe('Courses retrieved with success!'),
+                400: z.object({ message: z.string() })
             },
             querystring: z.object({
                 search: z.string().optional().describe('Search a title using Case-insensitive'),
