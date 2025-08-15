@@ -1,8 +1,6 @@
 import { test, expect } from 'vitest'
 import supertest from 'supertest'
 import { server } from '../app.ts'
-import { makeCourse } from '../tests/factories/make-course.ts'
-import { randomUUID } from 'crypto'
 import { makeUser } from '../tests/factories/make-user.ts'
 
 
