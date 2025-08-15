@@ -2,7 +2,7 @@ import { makeUser } from "./make-user.ts";
 import jwt from 'jsonwebtoken';
 
 export async function makeAuthenticatedUser(role: 'manager' | 'student') {
-    const { user } = await makeUser()
+    const { user } = await makeUser(role)
 
     if (!process.env.JWT_SECRET) {
         throw new Error('JWT is required.')
