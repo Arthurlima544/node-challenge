@@ -17,7 +17,7 @@ export const loginRoute: FastifyPluginAsyncZod = async (server) => {
                 password: z.string()
             }),
             response: {
-                201: z.string(),
+                200: z.object({ message: z.string() }),
                 400: z.object({ message: z.string() })
             }
         },
@@ -41,7 +41,7 @@ export const loginRoute: FastifyPluginAsyncZod = async (server) => {
             return reply.status(400).send({ message: 'Invalid Credentials' })
         }
 
-        return reply.status(201).send('ok')
+        return reply.status(200).send({ message: 'ok' })
     })
 
 }
