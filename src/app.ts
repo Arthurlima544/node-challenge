@@ -5,6 +5,7 @@ import { createCoursesRoute } from './routes/create-course.ts'
 import { getCoursesByIdRoute } from './routes/get-course-by-id.ts'
 import { getCoursesRoute } from './routes/get-courses.ts'
 import scalarAPIReference from '@scalar/fastify-api-reference'
+import { loginRoute } from './routes/login.ts'
 
 const server = fastify({
     logger: {
@@ -41,6 +42,7 @@ server.setSerializerCompiler(serializerCompiler)
 server.setValidatorCompiler(validatorCompiler)
 
 // Routes
+server.register(loginRoute)
 server.register(createCoursesRoute)
 server.register(getCoursesByIdRoute)
 server.register(getCoursesRoute)

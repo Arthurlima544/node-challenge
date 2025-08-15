@@ -3,11 +3,17 @@ import { db } from "../database/client.ts";
 import { courses, enrollments } from "../database/schema.ts";
 import z from 'zod';
 import { asc, ilike, and, SQL, eq, count } from 'drizzle-orm';
+import { checkRequestJWT } from './hooks/check-request-jwt.ts';
+import { checkUserRole } from './hooks/check-user-role.ts';
 
 const defaultPageSizeLimit = 20
 
 export const getCoursesRoute: FastifyPluginAsyncZod = async function (server) {
     server.get('/courses', {
+        preHandler: [
+            checkRequestJWT,
+            checkUserRole('manager'),
+        ],
         schema: {
             tags: ['courses'],
             summary: 'Get all courses',
@@ -22,7 +28,8 @@ export const getCoursesRoute: FastifyPluginAsyncZod = async function (server) {
                         })
                     ),
                     total: z.number().describe('Total amount of courses in database'),
-                }).describe('Courses retrieved with success!')
+                }).describe('Courses retrieved with success!'),
+                400: z.object({ message: z.string() })
             },
             querystring: z.object({
                 search: z.string().optional().describe('Search a title using Case-insensitive'),

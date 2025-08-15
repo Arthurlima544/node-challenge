@@ -29,6 +29,20 @@
       "when": 1755182853724,
       "tag": "0003_noisy_roland_deschain",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1755246631944,
+      "tag": "0004_safe_saracen",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1755247408992,
+      "tag": "0005_flimsy_black_queen",
+      "breakpoints": true
     }
   ]
 }
