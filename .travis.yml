@@ -14,7 +14,7 @@ jobs:
     - stage: linter-test
       script:
         - echo "Fake Linter Command"
-        - echo "Fake Test Command"
+        - npm run test:unit
     - stage: deploy
       if: branch = main
       before_script:
