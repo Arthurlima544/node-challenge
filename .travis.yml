@@ -19,6 +19,8 @@ jobs:
       if: branch = main
       before_script:
         - curl -L https://fly.io/install.sh | sh
-        - export PATH="$HOME/.fly/bin:$PATH"
+        - export FLYCTL_INSTALL="/home/travis/.fly"
+        - export PATH="$FLYCTL_INSTALL/bin:$PATH"
+        - flyctl -v
       script:
         - echo "Fake Test Command"
