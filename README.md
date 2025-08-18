@@ -13,8 +13,8 @@ However, the journey doesn't end with deployment. I believe true learning happen
 
 ## Table of Contents
 - [Technologies Used](#technologies-used)
-- [What I Learned in the course](#what-i-learned-in-the-course)
-- [What I Go by my self in the Docs and Searched for more information](#what-i-learned-through-self-study-and-documentation)
+- [What I Learned in the Course](#what-i-learned-in-the-course)
+- [What I Learned Through Self Study and Documentation](#what-i-learned-through-self-study-and-documentation)
 - [Next Steps](#next-steps)
 - [Installation](docs/installation.md)
 - [How to Use It](docs/usage-guide.md)

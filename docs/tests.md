@@ -6,7 +6,7 @@
 # Executed before command npm run test (run automatically)
 npm run pretest
 
-# Run all tests with coverage
+# Run all tests and generate coverage report
 npm run test
 
 # Run only unit tests

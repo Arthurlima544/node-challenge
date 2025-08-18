@@ -21,7 +21,11 @@
 
 3. **Environment setup**
 
-    - Add environment variables
+    - Edit the `.env` and `.env.test` file to set the required environment variables. The following variables are required:
+      - `DATABASE_URL` – The connection string for your database (e.g., `postgres://user:password@localhost:5432/dbname`)
+      - `PORT` – The port number the app should run on (e.g., `3000`)
+      - `JWT_SECRET` – Secret key for JWT authentication
+      - `NODE_ENV` - Environment (e.g., `development`, `test`, `production`)
 
 4. **Start database**
    ```bash
