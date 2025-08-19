@@ -1,0 +1,26 @@
+arch: amd64
+os: linux
+dist: noble
+language: node_js
+services:
+  - docker
+cache:
+  directories:
+  - "$HOME/.npm"
+install:
+  - npm ci
+jobs:
+  include:
+    - stage: linter-test
+      script:
+        - echo "Fake Linter Command"
+        - npm run test:unit
+    - stage: deploy
+      if: branch = main
+      before_script:
+        - curl -L https://fly.io/install.sh | sh
+        - export FLYCTL_INSTALL="/home/travis/.fly"
+        - export PATH="$FLYCTL_INSTALL/bin:$PATH"
+        - flyctl -v
+      script:
+        - echo "Fake Test Command"

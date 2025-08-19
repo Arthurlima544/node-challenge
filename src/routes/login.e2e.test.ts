@@ -1,7 +1,8 @@
-import { test, expect } from 'vitest'
+import { test, expect, vi } from 'vitest'
 import supertest from 'supertest'
 import { server } from '../app.ts'
 import { makeUser } from '../tests/factories/make-user.ts'
+import { db } from '../database/client.ts'
 
 
 test('login', async () => {
